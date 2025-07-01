@@ -61,8 +61,8 @@ export default function Settings() {
   const testSipConnection = async () => {
     if (!sipConfig.server || !sipConfig.username || !sipConfig.password) {
       toast({
-        title: "Validation Error",
-        description: "Please fill in all required SIP fields",
+        title: "Ошибка валидации",
+        description: "Пожалуйста, заполните все обязательные поля SIP",
         variant: "destructive",
       });
       return;
@@ -74,29 +74,29 @@ export default function Settings() {
 
       if (result.success) {
         toast({
-          title: "SIP Test Successful",
-          description: "Connection to SIP server established",
+          title: "Тест SIP успешен",
+          description: "Подключение к SIP серверу установлено",
         });
 
         // Auto-register if test successful
         const registerResult = await apiClient.registerSip(sipConfig);
         if (registerResult.success) {
           toast({
-            title: "SIP Registration Successful",
-            description: "SIP client registered successfully",
+            title: "Регистрация SIP успешна",
+            description: "SIP клиент зарегистри��ован успешно",
           });
         }
       } else {
         toast({
-          title: "SIP Test Failed",
-          description: result.error || "Unknown error occurred",
+          title: "Ошибка теста SIP",
+          description: result.error || "Произошла неизвестная ошибка",
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: "SIP Test Error",
-        description: "Failed to test SIP connection",
+        title: "Ошибка SIP теста",
+        description: "Не удалось протестировать SIP подключение",
         variant: "destructive",
       });
     }
