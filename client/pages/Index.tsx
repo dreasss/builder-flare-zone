@@ -10,6 +10,7 @@ import {
   OneCStatus,
   VoiceStatus,
 } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 import {
   Phone,
   Database,
@@ -30,6 +31,7 @@ interface SystemStatus {
 }
 
 export default function Index() {
+  const { toast } = useToast();
   const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(
     null,
   );
