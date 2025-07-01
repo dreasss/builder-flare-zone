@@ -324,27 +324,10 @@ export default function Index() {
               <Button
                 variant="outline"
                 className="w-full justify-start"
-                onClick={async () => {
-                  try {
-                    const response = await fetch("/api/demo/simulate-call", {
-                      method: "POST",
-                    });
-                    const result = await response.json();
-                    if (result.success) {
-                      toast({
-                        title: "Call Simulated",
-                        description: "Incoming call simulation started",
-                      });
-                      // Refresh data after a moment
-                      setTimeout(loadDashboardData, 1000);
-                    }
-                  } catch (error) {
-                    console.error("Error simulating call:", error);
-                  }
-                }}
+                onClick={() => (window.location.href = "/settings")}
               >
                 <Phone className="w-4 h-4 mr-2" />
-                Simulate Incoming Call
+                Настройки SIP
               </Button>
               <Button
                 variant="outline"
@@ -366,25 +349,10 @@ export default function Index() {
               <Button
                 variant="outline"
                 className="w-full justify-start"
-                onClick={async () => {
-                  try {
-                    const response = await fetch("/api/demo/create-ticket", {
-                      method: "POST",
-                    });
-                    const result = await response.json();
-                    if (result.success) {
-                      toast({
-                        title: "Demo Ticket",
-                        description: "Test ticket creation logged",
-                      });
-                    }
-                  } catch (error) {
-                    console.error("Error creating demo ticket:", error);
-                  }
-                }}
+                onClick={() => (window.location.href = "/integration")}
               >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Create Demo Ticket
+                <Database className="w-4 h-4 mr-2" />
+                Настройки 1С
               </Button>
               <Button
                 variant="outline"
