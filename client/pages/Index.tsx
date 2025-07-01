@@ -385,9 +385,21 @@ export default function Index() {
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Create Demo Ticket
               </Button>
-              <Button variant="outline" className="w-full justify-start">
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => (window.location.href = "/help")}
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Помощь и инструкции
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={loadDashboardData}
+              >
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Refresh Data
+                Обновить данные
               </Button>
             </div>
           </Card>
