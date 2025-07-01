@@ -77,6 +77,453 @@ export default function Help() {
         </Card>
 
         <Accordion type="multiple" className="space-y-4">
+          {/* System Installation */}
+          <AccordionItem value="installation" className="border-none">
+            <Card className="overflow-hidden">
+              <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center">
+                    <Download className="w-5 h-5 text-green-500" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="text-lg font-semibold">
+                      0. Установка системы VoiceBot
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Пошаговая установка на Linux и Windows серверах
+                    </p>
+                  </div>
+                  <Badge variant="outline">Начать здесь</Badge>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6">
+                <div className="space-y-6">
+                  <div className="bg-muted/30 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-2 flex items-center gap-2">
+                      <Server className="w-4 h-4" />
+                      Системные требования
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <h5 className="font-medium mb-2">Минимальные:</h5>
+                        <ul className="space-y-1 text-muted-foreground">
+                          <li>• ОС: Ubuntu 20.04+ / Windows Server 2019+</li>
+                          <li>• RAM: 4GB (8GB рекомендуется)</li>
+                          <li>• CPU: 2 ядра (4 ядра для высокой нагрузки)</li>
+                          <li>• Диск: 10GB свободного места</li>
+                          <li>• Сеть: Доступ к интернету</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-medium mb-2">Рекомендуемые:</h5>
+                        <ul className="space-y-1 text-muted-foreground">
+                          <li>• ОС: Ubuntu 22.04 LTS / Windows Server 2022</li>
+                          <li>• RAM: 16GB+</li>
+                          <li>• CPU: 8+ ядер</li>
+                          <li>• Диск: 50GB+ SSD</li>
+                          <li>• GPU: NVIDIA с CUDA (опционально)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Linux Installation */}
+                  <div>
+                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <Server className="w-4 h-4" />
+                      Установка на Linux (Ubuntu/Debian)
+                    </h4>
+                    <div className="space-y-4">
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          1. Обновление системы
+                        </h5>
+                        <div className="bg-black p-4 rounded-lg">
+                          <code className="text-green-400 text-sm block whitespace-pre-line">{`# Обновляем пакеты
+sudo apt update && sudo apt upgrade -y
+
+# Устанавливаем необходимые пакеты
+sudo apt install -y curl wget git unzip python3 python3-pip nodejs npm sqlite3 ffmpeg build-essential`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-green-400 hover:text-green-300"
+                            onClick={() =>
+                              copyToClipboard(
+                                "sudo apt update && sudo apt upgrade -y\\nsudo apt install -y curl wget git unzip python3 python3-pip nodejs npm sqlite3 ffmpeg build-essential",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать команды
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          2. Установка Node.js (версия 18+)
+                        </h5>
+                        <div className="bg-black p-4 rounded-lg">
+                          <code className="text-green-400 text-sm block whitespace-pre-line">{`# Добавляем NodeSource repository
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+
+# Устанавливаем Node.js
+sudo apt install -y nodejs
+
+# Проверяем версию
+node --version  # Должно быть v18.x.x или выше
+npm --version   # Должно быть 9.x.x или выше`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-green-400 hover:text-green-300"
+                            onClick={() =>
+                              copyToClipboard(
+                                "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -\\nsudo apt install -y nodejs",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          3. Установка Python 3.8+
+                        </h5>
+                        <div className="bg-black p-4 rounded-lg">
+                          <code className="text-green-400 text-sm block whitespace-pre-line">{`# Python уже должен быть установлен, проверяем версию
+python3 --version  # Должно быть 3.8+
+
+# Устанавливаем pip и venv
+sudo apt install -y python3-pip python3-venv python3-dev
+
+# Создаем виртуальное окружение
+python3 -m venv /opt/voicebot/venv
+source /opt/voicebot/venv/bin/activate`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-green-400 hover:text-green-300"
+                            onClick={() =>
+                              copyToClipboard(
+                                "sudo apt install -y python3-pip python3-venv python3-dev\\npython3 -m venv /opt/voicebot/venv",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          4. Скачивание и установка VoiceBot
+                        </h5>
+                        <div className="bg-black p-4 rounded-lg">
+                          <code className="text-green-400 text-sm block whitespace-pre-line">{`# Создаем директорию для VoiceBot
+sudo mkdir -p /opt/voicebot
+sudo chown -R $USER:$USER /opt/voicebot
+cd /opt/voicebot
+
+# Скачиваем VoiceBot (замените URL на актуальный)
+git clone https://github.com/your-company/voicebot.git .
+
+# Устанавливаем зависимости
+npm install
+
+# Активируем виртуальное окружение и устанавливаем Python пакеты
+source venv/bin/activate
+pip install -r requirements.txt`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-green-400 hover:text-green-300"
+                            onClick={() =>
+                              copyToClipboard(
+                                "sudo mkdir -p /opt/voicebot\\nsudo chown -R $USER:$USER /opt/voicebot\\ncd /opt/voicebot\\nnpm install",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          5. Установка голосовых движков
+                        </h5>
+                        <div className="bg-black p-4 rounded-lg">
+                          <code className="text-green-400 text-sm block whitespace-pre-line">{`# Создаем папку для моделей
+sudo mkdir -p /models/{vosk,tts,whisper}
+sudo chown -R $USER:$USER /models
+
+# Скачиваем русскую модель Vosk (350MB)
+cd /models/vosk
+wget https://alphacephei.com/vosk/models/vosk-model-ru-0.42.zip
+unzip vosk-model-ru-0.42.zip
+mv vosk-model-ru-0.42 ru
+
+# Устанавливаем TTS движки
+source /opt/voicebot/venv/bin/activate
+pip install TTS silero pyttsx3
+
+# Проверяем установку
+python3 -c "import TTS; print('✅ TTS установлен')"
+python3 -c "import vosk; print('✅ Vosk установлен')"`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-green-400 hover:text-green-300"
+                            onClick={() =>
+                              copyToClipboard(
+                                "sudo mkdir -p /models/{vosk,tts,whisper}\\nsudo chown -R $USER:$USER /models",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          6. Создание systemd сервиса
+                        </h5>
+                        <div className="bg-black p-4 rounded-lg">
+                          <code className="text-green-400 text-sm block whitespace-pre-line">{`# Создаем файл сервиса
+sudo tee /etc/systemd/system/voicebot.service > /dev/null <<EOF
+[Unit]
+Description=VoiceBot Technical Support System
+After=network.target
+
+[Service]
+Type=simple
+User=$USER
+WorkingDirectory=/opt/voicebot
+Environment=NODE_ENV=production
+Environment=PATH=/opt/voicebot/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Запускаем сервис
+sudo systemctl daemon-reload
+sudo systemctl enable voicebot
+sudo systemctl start voicebot
+
+# Проверяем статус
+sudo systemctl status voicebot`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-green-400 hover:text-green-300"
+                            onClick={() =>
+                              copyToClipboard(
+                                "sudo systemctl enable voicebot\\nsudo systemctl start voicebot",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Windows Installation */}
+                  <div>
+                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <Server className="w-4 h-4" />
+                      Установка на Windows Server
+                    </h4>
+                    <div className="space-y-4">
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          1. Установка Node.js
+                        </h5>
+                        <div className="bg-blue-900/20 p-4 rounded-lg">
+                          <ol className="text-sm space-y-2">
+                            <li>
+                              1. Скачайте Node.js с официального сайта:{" "}
+                              <strong>https://nodejs.org</strong>
+                            </li>
+                            <li>2. Выберите LTS версию (18.x или новее)</li>
+                            <li>
+                              3. Запустите установщик и следуйте инструкциям
+                            </li>
+                            <li>
+                              4. Откройте PowerShell и проверьте:{" "}
+                              <code>node --version</code>
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          2. Установка Python
+                        </h5>
+                        <div className="bg-blue-900/20 p-4 rounded-lg">
+                          <ol className="text-sm space-y-2">
+                            <li>
+                              1. Скачайте Python 3.8+ с{" "}
+                              <strong>https://python.org</strong>
+                            </li>
+                            <li>
+                              2. При установке отметьте "Add Python to PATH"
+                            </li>
+                            <li>
+                              3. Проверьте в PowerShell:{" "}
+                              <code>python --version</code>
+                            </li>
+                            <li>
+                              4. Установите виртуальное окружение:{" "}
+                              <code>pip install virtualenv</code>
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          3. Установка VoiceBot
+                        </h5>
+                        <div className="bg-blue-900/20 p-4 rounded-lg">
+                          <code className="text-blue-300 text-sm block whitespace-pre-line">{`# Откройте PowerShell как администратор
+# Создайте папку для VoiceBot
+mkdir C:\\VoiceBot
+cd C:\\VoiceBot
+
+# Скачайте архив VoiceBot и распакуйте его сюда
+# Или используйте Git:
+git clone https://github.com/your-company/voicebot.git .
+
+# Установите зависимости
+npm install
+
+# Создайте виртуальное окружение Python
+python -m venv venv
+.\\venv\\Scripts\\Activate.ps1
+
+# Установите Python зависимости
+pip install -r requirements.txt`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-blue-300 hover:text-blue-200"
+                            onClick={() =>
+                              copyToClipboard(
+                                "mkdir C:\\\\VoiceBot\\ncd C:\\\\VoiceBot\\nnpm install",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать команды
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          4. Установка голосовых движков
+                        </h5>
+                        <div className="bg-blue-900/20 p-4 rounded-lg">
+                          <code className="text-blue-300 text-sm block whitespace-pre-line">{`# Создайте папку для моделей
+mkdir C:\\Models
+mkdir C:\\Models\\vosk
+mkdir C:\\Models\\tts
+
+# Скачайте русскую модель Vosk
+# Перейдите на https://alphacephei.com/vosk/models
+# Скачайте vosk-model-ru-0.42.zip
+# Распакуйте в C:\\Models\\vosk\\ru
+
+# Активируйте виртуальное окружение
+.\\venv\\Scripts\\Activate.ps1
+
+# Установите движки
+pip install TTS silero vosk SpeechRecognition
+
+# Проверьте установку
+python -c "import TTS; print('✅ TTS установлен')"
+python -c "import vosk; print('✅ Vosk установлен')"`}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-blue-300 hover:text-blue-200"
+                            onClick={() =>
+                              copyToClipboard(
+                                "mkdir C:\\\\Models\\npip install TTS silero vosk SpeechRecognition",
+                              )
+                            }
+                          >
+                            <Copy className="w-3 h-3 mr-1" />
+                            Копировать
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium mb-2">
+                          5. Создание Windows службы
+                        </h5>
+                        <div className="bg-blue-900/20 p-4 rounded-lg">
+                          <ol className="text-sm space-y-2">
+                            <li>
+                              1. Установите <strong>NSSM</strong> (Non-Sucking
+                              Service Manager)
+                            </li>
+                            <li>
+                              2. Скачайте с{" "}
+                              <strong>https://nssm.cc/download</strong>
+                            </li>
+                            <li>3. Распакуйте и добавьте в PATH</li>
+                            <li>4. Создайте службу:</li>
+                          </ol>
+                          <code className="text-blue-300 text-sm block mt-2">{`nssm install VoiceBot "C:\\Program Files\\nodejs\\npm.cmd" "start"
+nssm set VoiceBot AppDirectory "C:\\VoiceBot"
+nssm set VoiceBot DisplayName "VoiceBot Technical Support"
+nssm set VoiceBot Description "Система голосового бота технической поддержки"
+nssm start VoiceBot`}</code>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                      <div>
+                        <h5 className="font-medium text-green-500 mb-1">
+                          Система установлена!
+                        </h5>
+                        <p className="text-sm text-muted-foreground">
+                          Откройте браузер и перейдите на{" "}
+                          <strong>http://localhost:8080</strong> для настройки
+                          VoiceBot. Если всё работает правильно, вы увидите
+                          панель управления.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AccordionContent>
+            </Card>
+          </AccordionItem>
+
           {/* SIP Configuration */}
           <AccordionItem value="sip" className="border-none">
             <Card className="overflow-hidden">
@@ -273,7 +720,7 @@ export default function Help() {
                       Что такое 1С:Итилиум?
                     </h4>
                     <p className="text-sm text-muted-foreground">
-                      1С:Итилиум - система управления IT-ус��угами на базе 1С.
+                      1С:Итилиум - система управления IT-услугами на базе 1С.
                       Интеграция позволяет автоматически создавать заявки из
                       звонков.
                     </p>
@@ -297,7 +744,7 @@ export default function Help() {
                           2
                         </span>
                         <span>
-                          Перейдите в <strong>"Администрировани��"</strong> →{" "}
+                          Перейдите в <strong>"Администрирование"</strong> →{" "}
                           <strong>"Внешние системы"</strong>
                         </span>
                       </li>
