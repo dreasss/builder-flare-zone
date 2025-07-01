@@ -186,14 +186,14 @@ export default function Settings() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+            <h1 className="text-3xl font-bold text-foreground">Настройки</h1>
             <p className="text-muted-foreground mt-1">
-              Configure your voice bot system
+              Настройка системы голосового бота
             </p>
           </div>
           <Button>
             <Save className="w-4 h-4 mr-2" />
-            Save Changes
+            Сохранить изменения
           </Button>
         </div>
 
@@ -203,13 +203,13 @@ export default function Settings() {
             <div className="flex items-center gap-3 mb-6">
               <Phone className="w-5 h-5 text-primary" />
               <h3 className="text-lg font-semibold text-foreground">
-                SIP Configuration
+                Настройки SIP
               </h3>
             </div>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="sip-server">SIP Server</Label>
+                  <Label htmlFor="sip-server">SIP Сервер</Label>
                   <Input
                     id="sip-server"
                     placeholder="192.168.1.100"
@@ -224,7 +224,7 @@ export default function Settings() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="sip-port">Port</Label>
+                  <Label htmlFor="sip-port">Порт</Label>
                   <Input
                     id="sip-port"
                     type="number"
@@ -241,7 +241,7 @@ export default function Settings() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="sip-username">Username</Label>
+                <Label htmlFor="sip-username">Имя пользователя</Label>
                 <Input
                   id="sip-username"
                   placeholder="voicebot"
@@ -256,7 +256,7 @@ export default function Settings() {
                 />
               </div>
               <div>
-                <Label htmlFor="sip-password">Password</Label>
+                <Label htmlFor="sip-password">Пароль</Label>
                 <Input
                   id="sip-password"
                   type="password"
@@ -283,7 +283,7 @@ export default function Settings() {
                 ) : (
                   <TestTube className="w-4 h-4 mr-2" />
                 )}
-                {testing.sip ? "Testing..." : "Test & Register"}
+                {testing.sip ? "Тестирование..." : "Тест и регистрация"}
               </Button>
             </div>
           </Card>
