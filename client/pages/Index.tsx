@@ -318,21 +318,74 @@ export default function Index() {
               Quick Actions
             </h3>
             <div className="space-y-3">
-              <Button variant="outline" className="w-full justify-start">
-                <CheckCircle className="w-4 h-4 mr-2" />
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={async () => {
+                  try {
+                    const response = await fetch("/api/demo/simulate-call", {
+                      method: "POST",
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                      toast({
+                        title: "Call Simulated",
+                        description: "Incoming call simulation started",
+                      });
+                      // Refresh data after a moment
+                      setTimeout(loadDashboardData, 1000);
+                    }
+                  } catch (error) {
+                    console.error("Error simulating call:", error);
+                  }
+                }}
+              >
+                <Phone className="w-4 h-4 mr-2" />
+                Simulate Incoming Call
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={async () => {
+                  const result = await apiClient.testVoiceEngine();
+                  toast({
+                    title: result.success
+                      ? "Voice Test Success"
+                      : "Voice Test Failed",
+                    description: result.error || "Voice engines tested",
+                    variant: result.success ? "default" : "destructive",
+                  });
+                }}
+              >
+                <Mic className="w-4 h-4 mr-2" />
                 Test Voice Engine
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Phone className="w-4 h-4 mr-2" />
-                SIP Configuration
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={async () => {
+                  try {
+                    const response = await fetch("/api/demo/create-ticket", {
+                      method: "POST",
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                      toast({
+                        title: "Demo Ticket",
+                        description: "Test ticket creation logged",
+                      });
+                    }
+                  } catch (error) {
+                    console.error("Error creating demo ticket:", error);
+                  }
+                }}
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Create Demo Ticket
               </Button>
               <Button variant="outline" className="w-full justify-start">
-                <Database className="w-4 h-4 mr-2" />
-                Sync with 1C
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <AlertTriangle className="w-4 h-4 mr-2" />
-                View Error Log
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Refresh Data
               </Button>
             </div>
           </Card>
