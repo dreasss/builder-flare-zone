@@ -22,6 +22,7 @@ import {
   TrendingUp,
   Activity,
   MessageCircle,
+  HelpCircle,
 } from "lucide-react";
 
 interface SystemStatus {
