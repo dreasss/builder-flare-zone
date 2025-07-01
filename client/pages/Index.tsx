@@ -120,20 +120,20 @@ export default function Index() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-foreground">
-              VoiceBot Dashboard
+              Панель управления VoiceBot
             </h1>
             <p className="text-muted-foreground mt-1">
-              Technical Support & Request Management System
+              Система голосового бота технической поддержки и приёма заявок
             </p>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" size="sm">
               <Activity className="w-4 h-4 mr-2" />
-              System Status
+              Состояние системы
             </Button>
             <Button size="sm">
               <TrendingUp className="w-4 h-4 mr-2" />
-              View Reports
+              Просмотр отчётов
             </Button>
           </div>
         </div>
@@ -141,36 +141,36 @@ export default function Index() {
         {/* System Status Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatusCard
-            title="SIP Connection"
+            title="SIP Подключение"
             value={getSipStatusInfo().value}
             description={
-              systemStatus.sip?.lastError || "Asterisk PBX connection"
+              systemStatus.sip?.lastError || "Подключение к Asterisk PBX"
             }
             icon={Phone}
             status={getSipStatusInfo().status as any}
           />
           <StatusCard
-            title="1C:Itilium"
+            title="1С:Итилиум"
             value={getOneCStatusInfo().value}
             description={
               systemStatus.oneC?.apiVersion
                 ? `API v${systemStatus.oneC.apiVersion}`
-                : "API connection"
+                : "Подключение к API"
             }
             icon={Database}
             status={getOneCStatusInfo().status as any}
           />
           <StatusCard
-            title="Voice Engine"
+            title="Голосовой движок"
             value={getVoiceStatusInfo().value}
-            description={systemStatus.voice?.lastError || "TTS/STT engines"}
+            description={systemStatus.voice?.lastError || "Движки TTS/STT"}
             icon={Mic}
             status={getVoiceStatusInfo().status as any}
           />
           <StatusCard
-            title="Active Calls"
+            title="Активные звонки"
             value={systemStatus.sip?.activeCalls?.toString() || "0"}
-            description="Current conversations"
+            description="Текущие разговоры"
             icon={Users}
             status={systemStatus.sip?.activeCalls ? "online" : "offline"}
           />
@@ -182,7 +182,7 @@ export default function Index() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-foreground">
-                Today's Activity
+                Активность за сегодня
               </h3>
               <Clock className="w-5 h-5 text-muted-foreground" />
             </div>
@@ -190,7 +190,9 @@ export default function Index() {
               <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-400 rounded-full" />
-                  <span className="text-sm font-medium">Calls Handled</span>
+                  <span className="text-sm font-medium">
+                    Обработано звонков
+                  </span>
                 </div>
                 <span className="text-lg font-bold text-foreground">
                   {dashboardStats?.totalCallsToday || 0}
@@ -199,7 +201,7 @@ export default function Index() {
               <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                  <span className="text-sm font-medium">Tickets Created</span>
+                  <span className="text-sm font-medium">Создано заявок</span>
                 </div>
                 <span className="text-lg font-bold text-foreground">
                   {dashboardStats?.recentTickets || 0}
@@ -208,12 +210,14 @@ export default function Index() {
               <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-yellow-400 rounded-full" />
-                  <span className="text-sm font-medium">Avg Call Time</span>
+                  <span className="text-sm font-medium">
+                    Сред. время звонка
+                  </span>
                 </div>
                 <span className="text-lg font-bold text-foreground">
                   {dashboardStats?.avgCallDuration
-                    ? `${Math.floor(dashboardStats.avgCallDuration / 60)}m ${Math.floor(dashboardStats.avgCallDuration % 60)}s`
-                    : "0m 0s"}
+                    ? `${Math.floor(dashboardStats.avgCallDuration / 60)}м ${Math.floor(dashboardStats.avgCallDuration % 60)}с`
+                    : "0м 0с"}
                 </span>
               </div>
             </div>
@@ -223,7 +227,7 @@ export default function Index() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-foreground">
-                Recent Support Requests
+                Последние обращения
               </h3>
               <MessageCircle className="w-5 h-5 text-muted-foreground" />
             </div>
@@ -279,7 +283,7 @@ export default function Index() {
           <Card className="lg:col-span-2 p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-foreground">
-                AI Performance Metrics
+                Показатели работы ИИ
               </h3>
               <TrendingUp className="w-5 h-5 text-muted-foreground" />
             </div>
@@ -288,20 +292,20 @@ export default function Index() {
                 <div className="text-2xl font-bold text-green-400 mb-1">
                   {systemStatus.voice?.accuracy
                     ? `${(systemStatus.voice.accuracy * 100).toFixed(1)}%`
-                    : "N/A"}
+                    : "—"}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Speech Recognition
+                  Распознавание речи
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-400 mb-1">
                   {dashboardStats?.recognitionAccuracy
                     ? `${(dashboardStats.recognitionAccuracy * 100).toFixed(1)}%`
-                    : "N/A"}
+                    : "—"}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Overall Accuracy
+                  Общая точность
                 </div>
               </div>
               <div className="text-center">
@@ -309,7 +313,7 @@ export default function Index() {
                   {systemStatus.voice?.processedAudio || 0}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Processed Calls
+                  Обработано звонков
                 </div>
               </div>
             </div>
@@ -318,7 +322,7 @@ export default function Index() {
           {/* Quick Actions */}
           <Card className="p-6">
             <h3 className="text-lg font-semibold text-foreground mb-6">
-              Quick Actions
+              Быстрые действия
             </h3>
             <div className="space-y-3">
               <Button
@@ -336,15 +340,16 @@ export default function Index() {
                   const result = await apiClient.testVoiceEngine();
                   toast({
                     title: result.success
-                      ? "Voice Test Success"
-                      : "Voice Test Failed",
-                    description: result.error || "Voice engines tested",
+                      ? "Тест голоса пройден"
+                      : "Ошибка теста голоса",
+                    description:
+                      result.error || "Голосовые движки протестированы",
                     variant: result.success ? "default" : "destructive",
                   });
                 }}
               >
                 <Mic className="w-4 h-4 mr-2" />
-                Test Voice Engine
+                Тест голосового движка
               </Button>
               <Button
                 variant="outline"
