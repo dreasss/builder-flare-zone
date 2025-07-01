@@ -11,6 +11,7 @@ import * as dbRoutes from "./routes/database";
 // Import services
 import { sipService } from "./services/sipService";
 import { databaseService } from "./services/databaseService";
+import { InitService } from "./services/initService";
 
 export function createServer() {
   const app = express();
@@ -57,6 +58,20 @@ export function createServer() {
   app.get("/api/dashboard/stats", dbRoutes.getDashboardStats);
   app.get("/api/metrics", dbRoutes.getSystemMetrics);
   app.post("/api/metrics", dbRoutes.insertSystemMetrics);
+
+  // Demo/Testing endpoints
+  app.post("/api/demo/simulate-call", (req, res) => {
+    InitService.simulateIncomingCall();
+    res.json({ success: true, message: "Incoming call simulated" });
+  });
+
+  app.post("/api/demo/create-ticket", (req, res) => {
+    InitService.createTestTicket();
+    res.json({ success: true, message: "Test ticket creation logged" });
+  });
+
+  // Initialize system on startup
+  InitService.initializeSystem().catch(console.error);
 
   // Setup real-time monitoring
   setupRealtimeMonitoring();
