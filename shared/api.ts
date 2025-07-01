@@ -1,8 +1,3 @@
-// Legacy demo interface for backward compatibility
-export interface DemoResponse {
-  message: string;
-}
-
 // VoiceBot API Types
 export interface SIPConfig {
   server: string;
