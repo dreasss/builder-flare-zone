@@ -75,22 +75,22 @@ function setupRealtimeMonitoring() {
         startTime: data.timestamp,
         status: "active",
       });
-      console.log(`📞 Incoming call from ${data.callerId}`);
+      console.log(`📞 Входящий звонок от ${data.callerId}`);
     } catch (error) {
-      console.error("Error logging incoming call:", error);
+      console.error("Ошибка записи входящего звонка:", error);
     }
   });
 
   sipService.on("callEnded", async (data) => {
-    console.log(`📞 Call ended at ${data.timestamp}`);
+    console.log(`📞 Звонок завершён в ${data.timestamp}`);
   });
 
   sipService.on("registered", (status) => {
-    console.log("📞 SIP registered:", status);
+    console.log("📞 SIP зарегистрирован:", status);
   });
 
   sipService.on("connectionLost", (status) => {
-    console.error("📞 SIP connection lost:", status.lastError);
+    console.error("📞 Потеряно SIP соединение:", status.lastError);
   });
 
   // System health monitoring every minute
@@ -109,9 +109,9 @@ function setupRealtimeMonitoring() {
         recognitionAccuracy: 0.92, // Get from voice service
       });
     } catch (error) {
-      console.error("Error recording system metrics:", error);
+      console.error("Ошибка записи системных метрик:", error);
     }
   }, 60000);
 
-  console.log("🚀 VoiceBot monitoring system initialized");
+  console.log("🚀 Система мониторинга VoiceBot инициализирована");
 }
