@@ -25,7 +25,7 @@ const PlaceholderPage = ({
         <h1 className="text-3xl font-bold text-foreground">{title}</h1>
         <p className="text-muted-foreground max-w-md">{description}</p>
         <div className="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-        <p className="text-sm text-muted-foreground">Coming Soon</p>
+        <p className="text-sm text-muted-foreground">Скоро будет доступно</p>
       </div>
     </div>
   </DashboardLayout>
@@ -47,8 +47,8 @@ const App = () => (
             path="/sip"
             element={
               <PlaceholderPage
-                title="SIP Settings"
-                description="Configure SIP server connection and telephony settings"
+                title="Настройки SIP"
+                description="Настройка подключения к SIP серверу и телефонии"
               />
             }
           />
@@ -56,8 +56,8 @@ const App = () => (
             path="/integration"
             element={
               <PlaceholderPage
-                title="1C Integration"
-                description="Manage 1C:Itilium API connection and data synchronization"
+                title="Интеграция 1С"
+                description="Управление подключением к 1С:Итилиум API и синхронизация данных"
               />
             }
           />
@@ -65,8 +65,8 @@ const App = () => (
             path="/voice"
             element={
               <PlaceholderPage
-                title="Voice Configuration"
-                description="Configure TTS, STT engines and voice parameters"
+                title="Настройки голоса"
+                description="Настройка движков TTS, STT и параметров голоса"
               />
             }
           />
@@ -74,8 +74,8 @@ const App = () => (
             path="/faq"
             element={
               <PlaceholderPage
-                title="FAQ Management"
-                description="Manage knowledge base and automated responses"
+                title="База знаний"
+                description="Управление базой знаний и автоматическими ответами"
               />
             }
           />
@@ -83,8 +83,8 @@ const App = () => (
             path="/logs"
             element={
               <PlaceholderPage
-                title="Call Logs"
-                description="View call history and conversation transcripts"
+                title="Логи звонков"
+                description="Просмотр истории звонков и расшифровок разговоров"
               />
             }
           />
@@ -92,8 +92,8 @@ const App = () => (
             path="/monitoring"
             element={
               <PlaceholderPage
-                title="System Monitoring"
-                description="Real-time system status and performance metrics"
+                title="Мониторинг системы"
+                description="Мониторинг состояния системы и метрики производительности в реальном времени"
               />
             }
           />
@@ -101,8 +101,8 @@ const App = () => (
             path="/alerts"
             element={
               <PlaceholderPage
-                title="Alert Management"
-                description="Configure and manage system alerts and notifications"
+                title="Управление уведомлениями"
+                description="Настройка и управление системными уведомлениями и алертами"
               />
             }
           />
