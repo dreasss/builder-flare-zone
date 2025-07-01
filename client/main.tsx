@@ -9,6 +9,26 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import { DashboardLayout } from "./components/DashboardLayout";
+
+const PlaceholderPage = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <DashboardLayout>
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="text-center space-y-4">
+        <h1 className="text-3xl font-bold text-foreground">{title}</h1>
+        <p className="text-muted-foreground max-w-md">{description}</p>
+        <div className="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+        <p className="text-sm text-muted-foreground">Coming Soon</p>
+      </div>
+    </div>
+  </DashboardLayout>
+);
 
 const queryClient = new QueryClient();
 
@@ -24,65 +44,64 @@ const App = () => (
           <Route
             path="/sip"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">
-                  SIP Settings - Coming Soon
-                </h1>
-              </div>
+              <PlaceholderPage
+                title="SIP Settings"
+                description="Configure SIP server connection and telephony settings"
+              />
             }
           />
           <Route
             path="/integration"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">
-                  1C Integration - Coming Soon
-                </h1>
-              </div>
+              <PlaceholderPage
+                title="1C Integration"
+                description="Manage 1C:Itilium API connection and data synchronization"
+              />
             }
           />
           <Route
             path="/voice"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">
-                  Voice Config - Coming Soon
-                </h1>
-              </div>
+              <PlaceholderPage
+                title="Voice Configuration"
+                description="Configure TTS, STT engines and voice parameters"
+              />
             }
           />
           <Route
             path="/faq"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">
-                  FAQ Management - Coming Soon
-                </h1>
-              </div>
+              <PlaceholderPage
+                title="FAQ Management"
+                description="Manage knowledge base and automated responses"
+              />
             }
           />
           <Route
             path="/logs"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">Call Logs - Coming Soon</h1>
-              </div>
+              <PlaceholderPage
+                title="Call Logs"
+                description="View call history and conversation transcripts"
+              />
             }
           />
           <Route
             path="/monitoring"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">Monitoring - Coming Soon</h1>
-              </div>
+              <PlaceholderPage
+                title="System Monitoring"
+                description="Real-time system status and performance metrics"
+              />
             }
           />
           <Route
             path="/alerts"
             element={
-              <div className="p-8">
-                <h1 className="text-2xl font-bold">Alerts - Coming Soon</h1>
-              </div>
+              <PlaceholderPage
+                title="Alert Management"
+                description="Configure and manage system alerts and notifications"
+              />
             }
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
