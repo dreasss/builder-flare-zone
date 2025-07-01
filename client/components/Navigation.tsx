@@ -9,6 +9,7 @@ import {
   Activity,
   FileText,
   Bell,
+  HelpCircle,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -21,6 +22,7 @@ const navItems = [
   { icon: FileText, label: "Call Logs", href: "/logs" },
   { icon: Activity, label: "Monitoring", href: "/monitoring" },
   { icon: Bell, label: "Alerts", href: "/alerts" },
+  { icon: HelpCircle, label: "Help", href: "/help" },
   { icon: Settings, label: "Settings", href: "/settings" },
 ];
 
