@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { handleDemo } from "./routes/demo";
 
 // Import API routes
 import * as sipRoutes from "./routes/sip";
@@ -23,10 +22,8 @@ export function createServer() {
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
-    res.json({ message: "VoiceBot API Server v1.0 - Ready!" });
+    res.json({ message: "VoiceBot API Сервер v1.0 - Готов к работе!" });
   });
-
-  app.get("/api/demo", handleDemo);
 
   // SIP API routes
   app.post("/api/sip/test", sipRoutes.testSIPConnection);
@@ -58,17 +55,6 @@ export function createServer() {
   app.get("/api/dashboard/stats", dbRoutes.getDashboardStats);
   app.get("/api/metrics", dbRoutes.getSystemMetrics);
   app.post("/api/metrics", dbRoutes.insertSystemMetrics);
-
-  // Demo/Testing endpoints
-  app.post("/api/demo/simulate-call", (req, res) => {
-    InitService.simulateIncomingCall();
-    res.json({ success: true, message: "Incoming call simulated" });
-  });
-
-  app.post("/api/demo/create-ticket", (req, res) => {
-    InitService.createTestTicket();
-    res.json({ success: true, message: "Test ticket creation logged" });
-  });
 
   // Initialize system on startup
   InitService.initializeSystem().catch(console.error);
