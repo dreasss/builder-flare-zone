@@ -20,15 +20,15 @@ const NotFound = () => {
         <div className="text-center space-y-6">
           <h1 className="text-6xl font-bold text-foreground">404</h1>
           <h2 className="text-2xl font-semibold text-foreground">
-            Page Not Found
+            Страница не найдена
           </h2>
           <p className="text-muted-foreground max-w-md">
-            The page you're looking for doesn't exist or has been moved.
+            Запрашиваемая страница не существует или была перемещена.
           </p>
           <Button asChild>
             <Link to="/">
               <Home className="w-4 h-4 mr-2" />
-              Back to Dashboard
+              Вернуться к панели управления
             </Link>
           </Button>
         </div>
