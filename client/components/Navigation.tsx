@@ -14,16 +14,16 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
-  { icon: Home, label: "Dashboard", href: "/" },
-  { icon: Phone, label: "SIP Settings", href: "/sip" },
-  { icon: Database, label: "1C Integration", href: "/integration" },
-  { icon: Mic, label: "Voice Config", href: "/voice" },
-  { icon: MessageSquare, label: "FAQ Management", href: "/faq" },
-  { icon: FileText, label: "Call Logs", href: "/logs" },
-  { icon: Activity, label: "Monitoring", href: "/monitoring" },
-  { icon: Bell, label: "Alerts", href: "/alerts" },
-  { icon: HelpCircle, label: "Help", href: "/help" },
-  { icon: Settings, label: "Settings", href: "/settings" },
+  { icon: Home, label: "Панель управления", href: "/" },
+  { icon: Phone, label: "Настройки SIP", href: "/sip" },
+  { icon: Database, label: "Интеграция 1С", href: "/integration" },
+  { icon: Mic, label: "Настройки голоса", href: "/voice" },
+  { icon: MessageSquare, label: "База знаний", href: "/faq" },
+  { icon: FileText, label: "Логи звонков", href: "/logs" },
+  { icon: Activity, label: "Мониторинг", href: "/monitoring" },
+  { icon: Bell, label: "Уведомления", href: "/alerts" },
+  { icon: HelpCircle, label: "Справка", href: "/help" },
+  { icon: Settings, label: "Настройки", href: "/settings" },
 ];
 
 export function Navigation() {
@@ -41,7 +41,7 @@ export function Navigation() {
               VoiceBot
             </h1>
             <p className="text-xs text-sidebar-foreground/60">
-              Technical Support
+              Техническая поддержка
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export function Navigation() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-sidebar-accent-foreground">
-              Admin
+              Администратор
             </p>
             <p className="text-xs text-sidebar-accent-foreground/60 truncate">
               admin@company.com
