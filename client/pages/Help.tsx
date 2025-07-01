@@ -211,7 +211,7 @@ export default function Help() {
                           1
                         </span>
                         <span>
-                          Перейдит�� в раздел <strong>"Settings"</strong> →{" "}
+                          Перейдите в раздел <strong>"Settings"</strong> →{" "}
                           <strong>"SIP Configuration"</strong>
                         </span>
                       </li>
@@ -273,7 +273,7 @@ export default function Help() {
                       Что такое 1С:Итилиум?
                     </h4>
                     <p className="text-sm text-muted-foreground">
-                      1С:Итилиум - система управления IT-услугами на базе 1С.
+                      1С:Итилиум - система управления IT-ус��угами на базе 1С.
                       Интеграция позволяет автоматически создавать заявки из
                       звонков.
                     </p>
@@ -297,7 +297,7 @@ export default function Help() {
                           2
                         </span>
                         <span>
-                          Перейдите в <strong>"Администрирование"</strong> →{" "}
+                          Перейдите в <strong>"Администрировани��"</strong> →{" "}
                           <strong>"Внешние системы"</strong>
                         </span>
                       </li>
@@ -695,7 +695,7 @@ pip3 install TTS silero vosk`)
                             <li>• Проверьте установку Python пакетов</li>
                             <li>• Убедитесь что модели скачаны</li>
                             <li>• Проверьте права доступа к папке /models</li>
-                            <li>• По��мотрите логи в консоли</li>
+                            <li>• Посмотрите логи в консоли</li>
                           </ul>
                         </AccordionContent>
                       </AccordionItem>
@@ -727,19 +727,42 @@ pip3 install TTS silero vosk`)
         <Card className="p-6">
           <h3 className="text-lg font-semibold mb-4">🔗 Полезные ссылки</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2">
+            <Button
+              variant="outline"
+              className="h-auto p-4 flex-col gap-2"
+              onClick={() => window.open("/API_DOCUMENTATION.md", "_blank")}
+            >
               <FileText className="w-6 h-6" />
               <span className="text-sm">API Документация</span>
             </Button>
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2">
+            <Button
+              variant="outline"
+              className="h-auto p-4 flex-col gap-2"
+              onClick={() =>
+                window.open("https://alphacephei.com/vosk/models", "_blank")
+              }
+            >
               <Download className="w-6 h-6" />
               <span className="text-sm">Скачать модели</span>
             </Button>
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2">
+            <Button
+              variant="outline"
+              className="h-auto p-4 flex-col gap-2"
+              onClick={() => (window.location.href = "/settings")}
+            >
               <Settings className="w-6 h-6" />
               <span className="text-sm">Настройки</span>
             </Button>
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2">
+            <Button
+              variant="outline"
+              className="h-auto p-4 flex-col gap-2"
+              onClick={() =>
+                window.open(
+                  "https://github.com/your-repo/voicebot/issues",
+                  "_blank",
+                )
+              }
+            >
               <ExternalLink className="w-6 h-6" />
               <span className="text-sm">Техподдержка</span>
             </Button>
