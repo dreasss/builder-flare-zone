@@ -2,6 +2,14 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import { StatusCard } from "@/components/StatusCard";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import {
+  apiClient,
+  DashboardStats,
+  SIPStatus,
+  OneCStatus,
+  VoiceStatus,
+} from "@/lib/api";
 import {
   Phone,
   Database,
@@ -15,7 +23,93 @@ import {
   MessageCircle,
 } from "lucide-react";
 
+interface SystemStatus {
+  sip: SIPStatus | null;
+  oneC: OneCStatus | null;
+  voice: VoiceStatus | null;
+}
+
 export default function Index() {
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(
+    null,
+  );
+  const [systemStatus, setSystemStatus] = useState<SystemStatus>({
+    sip: null,
+    oneC: null,
+    voice: null,
+  });
+  const [recentTickets, setRecentTickets] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadDashboardData();
+
+    // Refresh data every 30 seconds
+    const interval = setInterval(loadDashboardData, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      // Load dashboard stats
+      const statsResult = await apiClient.getDashboardStats();
+      if (statsResult.success && statsResult.stats) {
+        setDashboardStats(statsResult.stats);
+      }
+
+      // Load system status
+      const [sipResult, oneCResult, voiceResult] = await Promise.all([
+        apiClient.getSipStatus(),
+        apiClient.getOneCStatus(),
+        apiClient.getVoiceStatus(),
+      ]);
+
+      setSystemStatus({
+        sip: sipResult.success ? sipResult.status || null : null,
+        oneC: oneCResult.success ? oneCResult.status || null : null,
+        voice: voiceResult.success ? voiceResult.status || null : null,
+      });
+
+      // Load recent tickets
+      const ticketsResult = await apiClient.getTickets(4);
+      if (ticketsResult.success && ticketsResult.tickets) {
+        setRecentTickets(ticketsResult.tickets);
+      }
+    } catch (error) {
+      console.error("Error loading dashboard data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getSipStatusInfo = () => {
+    if (!systemStatus.sip) return { status: "offline", value: "Disconnected" };
+    if (systemStatus.sip.connected && systemStatus.sip.registered) {
+      return { status: "online", value: "Online" };
+    }
+    if (systemStatus.sip.connected) {
+      return { status: "warning", value: "Connected" };
+    }
+    return { status: "error", value: "Error" };
+  };
+
+  const getOneCStatusInfo = () => {
+    if (!systemStatus.oneC) return { status: "offline", value: "Disconnected" };
+    return systemStatus.oneC.connected
+      ? { status: "online", value: "Connected" }
+      : { status: "error", value: "Error" };
+  };
+
+  const getVoiceStatusInfo = () => {
+    if (!systemStatus.voice) return { status: "offline", value: "Not Ready" };
+    if (systemStatus.voice.ttsReady && systemStatus.voice.sttReady) {
+      return { status: "online", value: "Active" };
+    }
+    if (systemStatus.voice.ttsReady || systemStatus.voice.sttReady) {
+      return { status: "warning", value: "Partial" };
+    }
+    return { status: "error", value: "Error" };
+  };
   return (
     <DashboardLayout>
       <div className="space-y-8">
@@ -45,32 +139,37 @@ export default function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatusCard
             title="SIP Connection"
-            value="Online"
-            description="Asterisk PBX connected"
+            value={getSipStatusInfo().value}
+            description={
+              systemStatus.sip?.lastError || "Asterisk PBX connection"
+            }
             icon={Phone}
-            status="online"
+            status={getSipStatusInfo().status as any}
           />
           <StatusCard
             title="1C:Itilium"
-            value="Connected"
-            description="API responding"
+            value={getOneCStatusInfo().value}
+            description={
+              systemStatus.oneC?.apiVersion
+                ? `API v${systemStatus.oneC.apiVersion}`
+                : "API connection"
+            }
             icon={Database}
-            status="online"
+            status={getOneCStatusInfo().status as any}
           />
           <StatusCard
             title="Voice Engine"
-            value="Active"
-            description="TTS/STT operational"
+            value={getVoiceStatusInfo().value}
+            description={systemStatus.voice?.lastError || "TTS/STT engines"}
             icon={Mic}
-            status="online"
+            status={getVoiceStatusInfo().status as any}
           />
           <StatusCard
             title="Active Calls"
-            value="3"
+            value={systemStatus.sip?.activeCalls?.toString() || "0"}
             description="Current conversations"
             icon={Users}
-            status="online"
-            trend={{ value: 15, isPositive: true }}
+            status={systemStatus.sip?.activeCalls ? "online" : "offline"}
           />
         </div>
 
@@ -90,14 +189,18 @@ export default function Index() {
                   <div className="w-2 h-2 bg-green-400 rounded-full" />
                   <span className="text-sm font-medium">Calls Handled</span>
                 </div>
-                <span className="text-lg font-bold text-foreground">127</span>
+                <span className="text-lg font-bold text-foreground">
+                  {dashboardStats?.totalCallsToday || 0}
+                </span>
               </div>
               <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-400 rounded-full" />
                   <span className="text-sm font-medium">Tickets Created</span>
                 </div>
-                <span className="text-lg font-bold text-foreground">89</span>
+                <span className="text-lg font-bold text-foreground">
+                  {dashboardStats?.recentTickets || 0}
+                </span>
               </div>
               <div className="flex items-center justify-between p-4 bg-muted/20 rounded-lg">
                 <div className="flex items-center gap-3">
@@ -105,7 +208,9 @@ export default function Index() {
                   <span className="text-sm font-medium">Avg Call Time</span>
                 </div>
                 <span className="text-lg font-bold text-foreground">
-                  2m 34s
+                  {dashboardStats?.avgCallDuration
+                    ? `${Math.floor(dashboardStats.avgCallDuration / 60)}m ${Math.floor(dashboardStats.avgCallDuration % 60)}s`
+                    : "0m 0s"}
                 </span>
               </div>
             </div>
@@ -120,60 +225,47 @@ export default function Index() {
               <MessageCircle className="w-5 h-5 text-muted-foreground" />
             </div>
             <div className="space-y-3">
-              {[
-                {
-                  id: "IT-2024-001",
-                  issue: "Сервер не отвечает",
-                  priority: "high",
-                  time: "2 min ago",
-                },
-                {
-                  id: "IT-2024-002",
-                  issue: "Проблемы с принтером",
-                  priority: "medium",
-                  time: "5 min ago",
-                },
-                {
-                  id: "IT-2024-003",
-                  issue: "Восстановление пароля",
-                  priority: "low",
-                  time: "8 min ago",
-                },
-                {
-                  id: "IT-2024-004",
-                  issue: "Настройка VPN",
-                  priority: "medium",
-                  time: "12 min ago",
-                },
-              ].map((request) => (
-                <div
-                  key={request.id}
-                  className="flex items-center justify-between p-3 bg-muted/20 rounded-lg"
-                >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-muted-foreground">
-                        {request.id}
-                      </span>
-                      <div
-                        className={`w-2 h-2 rounded-full ${
-                          request.priority === "high"
-                            ? "bg-red-400"
-                            : request.priority === "medium"
-                              ? "bg-yellow-400"
-                              : "bg-green-400"
-                        }`}
-                      />
+              {recentTickets.length > 0 ? (
+                recentTickets.map((ticket) => (
+                  <div
+                    key={ticket.id}
+                    className="flex items-center justify-between p-3 bg-muted/20 rounded-lg"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-muted-foreground">
+                          {ticket.id}
+                        </span>
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            ticket.priority === "critical" ||
+                            ticket.priority === "high"
+                              ? "bg-red-400"
+                              : ticket.priority === "medium"
+                                ? "bg-yellow-400"
+                                : "bg-green-400"
+                          }`}
+                        />
+                      </div>
+                      <p className="text-sm font-medium text-foreground mt-1">
+                        {ticket.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(ticket.createdAt).toLocaleTimeString()} -{" "}
+                        {ticket.customerName}
+                      </p>
                     </div>
-                    <p className="text-sm font-medium text-foreground mt-1">
-                      {request.issue}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {request.time}
-                    </p>
                   </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  <MessageCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No recent tickets found</p>
+                  <p className="text-xs">
+                    Tickets will appear here when created
+                  </p>
                 </div>
-              ))}
+              )}
             </div>
           </Card>
         </div>
@@ -191,7 +283,9 @@ export default function Index() {
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-400 mb-1">
-                  94.2%
+                  {systemStatus.voice?.accuracy
+                    ? `${(systemStatus.voice.accuracy * 100).toFixed(1)}%`
+                    : "N/A"}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Speech Recognition
@@ -199,18 +293,20 @@ export default function Index() {
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-400 mb-1">
-                  87.8%
+                  {dashboardStats?.recognitionAccuracy
+                    ? `${(dashboardStats.recognitionAccuracy * 100).toFixed(1)}%`
+                    : "N/A"}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Intent Classification
+                  Overall Accuracy
                 </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-400 mb-1">
-                  91.5%
+                  {systemStatus.voice?.processedAudio || 0}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Response Accuracy
+                  Processed Calls
                 </div>
               </div>
             </div>
